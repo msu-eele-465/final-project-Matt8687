@@ -62,7 +62,12 @@ may not be implemented based on time restraints.
 
 Desired Prescaler level: 
 
-- N%>83%
+- [ ] 100%
+- [ ] 95%
+- [x] 90%
+- [ ] 85%
+- [ ] 80%
+- [ ] 75%
 
 ### Prescalar requirements 
 
