@@ -1,8 +1,8 @@
 # Final project proposal
 
-- [ ] I have reviewed the project guidelines.
-- [ ] I will be working alone on this project.
-- [ ] No significant portion of this project will be (or has been) used in other course work.
+- [X] I have reviewed the project guidelines.
+- [X] I will be working alone on this project.
+- [X] No significant portion of this project will be (or has been) used in other course work.
 
 ## Embedded System Description
 
