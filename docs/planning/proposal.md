@@ -26,6 +26,10 @@ substitution of the Temperature sensor for I2C interface, and they end with usin
 peripherals. We also include 1-2 chainable 16x16 LED arrays driven by a separate MSP430FR2310 over I2C.
 ![Picture of Circuit Diagram](circuit_diagram.png)
 
+**New Hardware Links**
+* [ESP32](https://www.amazon.com/dp/B0C7C2HQ7P?ref=ppx_yo2ov_dt_b_fed_asin_title)
+* [16x16 LED-Array](https://www.amazon.com/dp/B088BTYJH6?ref=ppx_yo2ov_dt_b_fed_asin_title)
+
 ## Software overview
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -63,8 +67,8 @@ may not be implemented based on time restraints.
 Desired Prescaler level: 
 
 - [ ] 100%
-- [ ] 95%
-- [x] 90%
+- [x] 95%
+- [ ] 90%
 - [ ] 85%
 - [ ] 80%
 - [ ] 75%
