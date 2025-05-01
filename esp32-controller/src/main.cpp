@@ -1,62 +1,31 @@
 #include <Arduino.h>
 #include <Wire.h>
+#include "lcd_i2c.h"
+#include "rtc_i2c.h"
 
-void clear();
-void startTop();
-
-byte error, address;
 
 void setup() {
   Serial.begin(115200);
+  // while(!Serial){}
   Serial.println("Serial Started.");
 
-  Serial.println("Starting I2C Wire...");
-  Wire.begin();
-  Wire.setClock(800000);
-  clear();
-  Serial.println("I2C Wire Started.");
+  lcd_init();
+  rtc_set_date(6, 5, 25);
+  rtc_set_time(9, 25, 00);
 
 }
  
 void loop() {
-  error = 1;
-  byte data[] = "How is you Matt ";
-  int nDevices;
-  address = 0x40;
+  Serial.print(rtc_get_date());
+  Serial.print(" | ");
+  Serial.println(rtc_get_time());
 
-  startTop();
+  lcd_clear();
 
-  Serial.println("Sending LCD Data");
-  Wire.beginTransmission(address);
-  Wire.write(data, sizeof(data)-1);
-  Serial.println();
-  Serial.println(sizeof(data)-1);
-  error = Wire.endTransmission();
-  if (error == 0) {
-    Serial.println("Unable to write to 0x40");
-  }
+  byte top[] = "How is you Matt?";
+  lcd_writeTop(top);
+  
+  byte bottom[] = "I hope good...  ";
+  lcd_writeBottom(bottom);
   sleep(3);
-}
-
-void clear(){
-  address = 0x40;
-  Wire.beginTransmission(address);
-  for(int i = 0; i<16; i++){
-    Wire.write('z');
-  }
-  Wire.write('H');
-  Wire.write('G');
-  error = Wire.endTransmission();
-}
-
-void startTop(){
-  address = 0x40;
-  Wire.beginTransmission(address);
-  for(int i = 0; i<16; i++){
-    Wire.write('z');
-  }
-  Wire.write('H');
-  Wire.write('G');
-  Wire.write('T');
-  error = Wire.endTransmission();
 }
