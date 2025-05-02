@@ -1,5 +1,3 @@
-#include <Arduino.h>
-#include <Wire.h>
 #include "lcd_i2c.h"
 
 void lcd_clear(){

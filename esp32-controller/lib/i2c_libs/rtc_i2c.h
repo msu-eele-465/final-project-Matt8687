@@ -7,7 +7,8 @@
 
 String rtc_get_date();
 void rtc_set_date(int day, int month, int year);
-String rtc_get_time();
+int rtc_get_time();
+void rtc_get_time_bytes(byte store[], int offset = 8);
 void rtc_set_time(int hour, int minute, int second);
 
 #endif
