@@ -26,6 +26,8 @@ String output27State = "off";
 const int output26 = 26;
 const int output27 = 27;
 
+String custom_message_input = "";
+
 void web_server_setup() {
   Serial.begin(115200);
   // Initialize the output variables as outputs
@@ -93,6 +95,7 @@ void web_server_loop(){
               }
               Serial.println("\nMessage: " + message + " Size: " + (String)string_size);
               LAC_update_string(message, string_size);
+              custom_message_input = message;
             }
             
             // Display the HTML web page
@@ -120,7 +123,7 @@ void web_server_loop(){
             client.println(
               "<form action='/string_submit'>"
               "  <label for='string'> Message Input: </label><br>"
-              "  <input type='text' id='message' name='message'><br>"
+              "  <input type='text' id='message' name='message' value='"+custom_message_input+"'><br>"
               "  <input type='submit' id='submit'>"
               "</form>");
 
