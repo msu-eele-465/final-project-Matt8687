@@ -27,6 +27,7 @@ int numColor = arr_len(colors)-1;
 int pixelPerChar = 4;
 int maxDisplacement;
 int mode = 0;
+int string_length = strlen(Text[1]);
 
 static TaskHandle_t xHandle = NULL;
 
@@ -67,7 +68,7 @@ void LAC_update(void *stuff) {
 
 // this does the magic of scrolling
 void LAC_scroll(char* message,int delays) {
-    maxDisplacement = strlen(message) * pixelPerChar + matrix.width();
+    maxDisplacement = string_length * pixelPerChar + matrix.width();
     if(++line_pass > matrix.width()) line_pass = 0;
     matrix.print(String(message));
     if(--x < -maxDisplacement) {
@@ -88,6 +89,7 @@ void LAC_update_string(String change, int size){
     for(int i = 0; i<size; i++){
         Text[1][i] = change[i];
     }
+    string_length = size+8;
 }
 
 void LAC_update_mode(int mode_update){

@@ -83,14 +83,16 @@ void web_server_loop(){
             } else if (header.indexOf("GET /string_submit") >= 0){
               Serial.println("Working!");
               String message = "";
+              int string_size = 0;
               for(int i = 27; i<1000; i++){
                 if(header[i+1] == 'H' && header[i+2] == 'T' && header[i+3] == 'T')
                   break;
                 Serial.print(header[i]);
                 message+=header[i];
+                string_size++;
               }
-              Serial.println("\nMessage: " + message);
-              LAC_update_string(message, sizeof(message));
+              Serial.println("\nMessage: " + message + " Size: " + (String)string_size);
+              LAC_update_string(message, string_size);
             }
             
             // Display the HTML web page
