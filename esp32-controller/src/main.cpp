@@ -5,6 +5,7 @@
 #include "../lib/i2c_libs/lcd_i2c.h"
 #include "../lib/i2c_libs/rtc_i2c.h"
 #include "../lib/i2c_libs/lm92_i2c.h"
+#include "led_array_control.h"
 
 hw_timer_t * timer = NULL;
 volatile int Heartbeat_state = 0;
@@ -27,6 +28,7 @@ void setup() {
   lcd_init();
   rtc_set_date(6, 5, 25);
   rtc_set_time(9, 25, 00);
+  LAC_init();
 
   timer = timerBegin(0, 80, true);           	// timer 0, prescalar: 80, UP counting
   timerAttachInterrupt(timer, &onTimer, true); 	// Attach interrupt
@@ -46,6 +48,7 @@ void loop() {
 
   Serial.println(convert_to_string(data, sizeof(data)-1));
   
+  LAC_update();
   
 }
 
