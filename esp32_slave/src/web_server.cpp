@@ -80,8 +80,11 @@ void web_server_loop(){
               Serial.println("mode 2");
               LAC_update_mode(1);
             } else if (header.indexOf("GET /3") >= 0) {
-              Serial.println("mode 2");
+              Serial.println("mode 3");
               LAC_update_mode(2);
+            } else if (header.indexOf("GET /4") >= 0) {
+              Serial.println("mode 4");
+              LAC_update_mode(3);
             } else if (header.indexOf("GET /string_submit") >= 0){
               Serial.println("Working!");
               String message = "";
@@ -93,8 +96,23 @@ void web_server_loop(){
                 message+=header[i];
                 string_size++;
               }
+              for(int i = 0; i<string_size; i++){
+                if(message[i] == '+'){
+                  message[i] = ' ';
+                } else if(message[i] == '%' && i!=string_size-1){
+                  if(message[i+1] == '3' && message[i+2] == 'F'){
+                    message[i] = '?';
+                    message[i+1] = ' ';
+                    message[i+2] = ' ';
+                  } else if(message[i+1] == '2' && message[i+2] == '1'){
+                    message[i] = '!';
+                    message[i+1] = ' ';
+                    message[i+2] = ' ';
+                  }
+                } 
+              }
               Serial.println("\nMessage: " + message + " Size: " + (String)string_size);
-              LAC_update_string(message, string_size);
+              LAC_update_string(message, string_size, 1);
               custom_message_input = message;
             }
             
@@ -119,6 +137,8 @@ void web_server_loop(){
             client.println("<p><a href=\"/1\"><button class=\"button\">Off</button></a></p>");
             client.println("<p><a href=\"/2\"><button class=\"button\">Scroll Text</button></a></p>");
             client.println("<p><a href=\"/3\"><button class=\"button\">Time/Temp</button></a></p>");
+            client.println("<p><a href=\"/4\"><button class=\"button\">Static Message</button></a></p>");
+
 
             client.println(
               "<form action='/string_submit'>"
