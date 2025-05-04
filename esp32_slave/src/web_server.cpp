@@ -26,6 +26,8 @@ String output27State = "off";
 const int output26 = 26;
 const int output27 = 27;
 
+String custom_message_input = "";
+
 void web_server_setup() {
   Serial.begin(115200);
   // Initialize the output variables as outputs
@@ -78,19 +80,40 @@ void web_server_loop(){
               Serial.println("mode 2");
               LAC_update_mode(1);
             } else if (header.indexOf("GET /3") >= 0) {
-              Serial.println("mode 2");
+              Serial.println("mode 3");
               LAC_update_mode(2);
+            } else if (header.indexOf("GET /4") >= 0) {
+              Serial.println("mode 4");
+              LAC_update_mode(3);
             } else if (header.indexOf("GET /string_submit") >= 0){
               Serial.println("Working!");
               String message = "";
+              int string_size = 0;
               for(int i = 27; i<1000; i++){
                 if(header[i+1] == 'H' && header[i+2] == 'T' && header[i+3] == 'T')
                   break;
                 Serial.print(header[i]);
                 message+=header[i];
+                string_size++;
               }
-              Serial.println("\nMessage: " + message);
-              LAC_update_string(message, sizeof(message));
+              for(int i = 0; i<string_size; i++){
+                if(message[i] == '+'){
+                  message[i] = ' ';
+                } else if(message[i] == '%' && i!=string_size-1){
+                  if(message[i+1] == '3' && message[i+2] == 'F'){
+                    message[i] = '?';
+                    message[i+1] = ' ';
+                    message[i+2] = ' ';
+                  } else if(message[i+1] == '2' && message[i+2] == '1'){
+                    message[i] = '!';
+                    message[i+1] = ' ';
+                    message[i+2] = ' ';
+                  }
+                } 
+              }
+              Serial.println("\nMessage: " + message + " Size: " + (String)string_size);
+              LAC_update_string(message, string_size, 1);
+              custom_message_input = message;
             }
             
             // Display the HTML web page
@@ -114,11 +137,13 @@ void web_server_loop(){
             client.println("<p><a href=\"/1\"><button class=\"button\">Off</button></a></p>");
             client.println("<p><a href=\"/2\"><button class=\"button\">Scroll Text</button></a></p>");
             client.println("<p><a href=\"/3\"><button class=\"button\">Time/Temp</button></a></p>");
+            client.println("<p><a href=\"/4\"><button class=\"button\">Static Message</button></a></p>");
+
 
             client.println(
               "<form action='/string_submit'>"
               "  <label for='string'> Message Input: </label><br>"
-              "  <input type='text' id='message' name='message'><br>"
+              "  <input type='text' id='message' name='message' value='"+custom_message_input+"'><br>"
               "  <input type='submit' id='submit'>"
               "</form>");
 

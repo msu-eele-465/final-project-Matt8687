@@ -4,6 +4,9 @@
 #include "esp_log.h"
 #include "led_array_control.h"
 #include "web_server.h"
+#include "rtc_i2c.h"
+#include "lm92_i2c.h"
+#include "lcd_i2c.h"
 
 static const char *TAG_MAIN = "Main";
 void IRAM_ATTR onTimer();
@@ -18,6 +21,8 @@ void setup() {
   LAC_init();
   ESP_LOGI(TAG_MAIN, "Finished!]\nStarting main event loop.");
   web_server_setup();
+  rtc_init();
+  lcd_init();
 
   // initialize onboard Blue LED for heartbeat
   pinMode(2, OUTPUT);
@@ -32,6 +37,21 @@ void setup() {
 void loop() {
   ESP_LOGI(TAG_MAIN, "Running...");
   web_server_loop();
+  byte data[] = "12:45:00        ";
+  rtc_get_time_bytes(data, 0);
+  LAC_update_string(convert_to_string(data, 8), 8, 2);
+  lm92_temp_btes(data, 0);
+  LAC_update_string(convert_to_string(data, 5), 5, 3);
+
+  // if(ISR_counter%2 == 0){
+    // lcd_clear();
+    for(int i = 0; i<16; i++){
+      data[i] = ' ';
+    }
+    rtc_get_time_bytes(data);
+    lm92_temp_btes(data);
+    lcd_writeBottom(data);
+  // }
 }
 
 void IRAM_ATTR onTimer(){
