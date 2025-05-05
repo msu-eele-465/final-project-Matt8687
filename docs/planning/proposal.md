@@ -1,24 +1,65 @@
 # Final project proposal
 
-- [ ] I have reviewed the project guidelines.
-- [ ] I will be working alone on this project.
-- [ ] No significant portion of this project will be (or has been) used in other course work.
+- [X] I have reviewed the project guidelines.
+- [X] I will be working alone on this project.
+- [X] No significant portion of this project will be (or has been) used in other course work.
 
 ## Embedded System Description
 
-At a high level, explain in 2-3 sentences what your embedded system will do.  Then, in 1-2 sentences each, explain each input, the process, and each output. This section is the bulk of the proposal.
+Graduation Cap LED-Array & Control
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+The idea I had was to create and operate a cheap chainable led array from amazon that is controlled by an
+MSP430FR2310, but the user can control from their phone (utilizing a raspberry pi hotspot which also hosts a server
+for array control). After getting recommended to the ESP32 from you I switched away from the thought of using a
+raspberry pi; this will be helpful for both power and space. The goal is to make it a mobile setup; then possibly put it
+on my cap for graduation. For the sake of having values to display, either over LED array or LCD, I’ll also hook up
+a temperature sensor and real-time-clock. Hopefully I can lean into my Computer Science background with the
+ESP32 while maintaining a footing within the realm of Microcontroller Applications.
 
 ## Hardware Setup
 
-What hardware will you require? Provide a conceptual circuit diagram and/or block diagram to help the reviewers understand your proposal. Be sure to introduce and discuss your figures in the text.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Although fairly similar from a high level, this project is vastly different from most other labs we’ve done
+this semester. One portion is the layout, really the only constant is the LCD slave. Differences start minor with the
+substitution of the Temperature sensor for I2C interface, and they end with using the ESP32 for driving I2C
+peripherals. We also include 1-2 chainable 16x16 LED arrays driven by a separate MSP430FR2310 over I2C.
+![Picture of Circuit Diagram](circuit_diagram.png)
+
+**New Hardware Links**
+* [ESP32](https://www.amazon.com/dp/B0C7C2HQ7P?ref=ppx_yo2ov_dt_b_fed_asin_title)
+* [16x16 LED-Array](https://www.amazon.com/dp/B088BTYJH6?ref=ppx_yo2ov_dt_b_fed_asin_title)
 
 ## Software overview
 
-Discuss, at a high level, a concept of how your code will work. Include a *high-level* flowchart. This is a high-level concept that should concisely communicate the project's concept.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+The user will be able to connect to a hotspot hosted by the ESP32, open a browser, and control the system
+outputs via a web app hosted by the ESP32 on its own network. The outputs will be options for pretty patterns,
+letters, numbers, or readings from the temperature sensor and real-time-clock. Another cool option to tack on, since I
+ordered a pack of 3 ESP32s, would be to create another input to the system with another ESP32 as a remote control
+to change pre-programmed patterns on the original ESP’s output peripherals. Though, it should be noted the last one
+may not be implemented based on time restraints.
 
 ## Testing Procedure
 
-Briefly describe how you will test and verify that your project is a success. Think about how you will *demo* the final project. If you need extra equipment for the demo, be sure that you can either bring the equipment or convincingly simulate it. For example, if you want to build a system that uses CAN bus to interface with your car, you won't be able to bring your car into Cobleigh for the demo...
+**Web Interface**
+* connect to ESP32 hotspot
+* navigate to web app
+
+**LED Array**
+* Display pattern(s)
+* Display character(s)
+* Display time and temp
+
+**LCD**
+* Display selected pattern (custom for characters)
+* Display time and temp
+
+***Optional:* ESP32 wireless remote**
+* Button 1: pattern 1
+* Button 2: pattern 2
+* Button 3: pattern 3
+* On/Off for outputs
 
 
 ## Prescaler
@@ -26,43 +67,39 @@ Briefly describe how you will test and verify that your project is a success. Th
 Desired Prescaler level: 
 
 - [ ] 100%
-- [ ] 95% 
-- [ ] 90% 
-- [ ] 85% 
-- [ ] 80% 
-- [ ] 75% 
+- [x] 95%
+- [ ] 90%
+- [ ] 85%
+- [ ] 80%
+- [ ] 75%
 
 ### Prescalar requirements 
 
-**Outline how you meet the requirements for your desired prescalar level**
+**Inputs:**
+* Temperature Sensor
+* RTC
+* Wireless Web Interface
 
-**The inputs to the system will be:**
-1.  Short description of input #1
-2.  
+**Outputs:**
+* LCD
+* 16x16 LED array(s)
+* Heartbeat LED
+------------------------------------
+**Master (ESP32):**
+* Hosting a hotspot and web interface for input
+* Managing the slave output over I2C
 
-**The outputs of the system will be:**
-1.   Short description of output #1
-2. 
-
-**The project objective is**
-
-{text – 1 to 2 sentences}
-
-**The new hardware or software modules are:**
-1. Short description of new hardware or software module
-2. 
-
-
-The Master will be responsible for:
-
-{text – 1 to 2 sentences}
-
-The Slave(s) will be responsible for:
-
-{text – 1 to 2 sentences}
+**Slaves (MSP430FR2310):**
+* Controlling LCD
+* Controlling 16x16 LED array(s)
 
 
 
 ### Argument for Desired Prescaler
 
-Consider the guidelines presented in the lecture notes and convince the reviewers that this proposal meets the minimum requirements for your desired prescale level.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+I would argue that there is a large amount of learning required to complete this project, especially
+considering the use of a new microcontroller that does not use the same programming software (in theory that
+should easily be setup, but I have been wrong in that regard before). Furthermore, most portions of the project are
+very new to me, and thus I can’t for certain say how difficult it truly will be. What I can say is that it will be
+interesting and provide me useful skills with another popular microcontroller.
