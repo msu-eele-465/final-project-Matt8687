@@ -28,11 +28,11 @@ const uint16_t colors[] = {
   matrix.Color(255, 0, 255), matrix.Color(100, 255, 0), matrix.Color(255, 255, 0),matrix.Color(0, 0, 255), matrix.Color(255, 0, 255), matrix.Color(0, 255, 255), matrix.Color(255, 255, 255)};
 int brightness = 40;
 
-int numMode = 4;
+int numMode = 5;
 int numColor = arr_len(colors)-1;
 int pixelPerChar = 4;
 int maxDisplacement;
-int mode = 1;
+int mode = 0;
 int string_length = strlen(Text[1]);
 
 static TaskHandle_t xHandle = NULL;
@@ -49,7 +49,7 @@ void LAC_init() {
     if(xHandle == NULL){
         Serial.println("Error!!!");
     }
-    LAC_update_string("Greeting! Wonderful Day in EELE?", 31, 1);
+    LAC_update_string("Greetings! Wonderful Day in EELE?", 31, 1);
 }
 
 int y = matrix.height();
@@ -109,8 +109,6 @@ void LAC_scroll(char* message,int delays) {
     matrix.print(String(message));
     if(--x < -maxDisplacement) {
         x = matrix.width();
-        if(++pass >= numColor) { pass = 0;  };
-        //mode++;
     }
     delay(delays);
 }
