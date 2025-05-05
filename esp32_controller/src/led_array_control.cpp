@@ -1,5 +1,14 @@
 #include "led_array_control.h"
 
+/*
+ * @file led_array_control.cpp
+ * @brief module created to take control of the LED array
+ * 
+ * This file is the primary controller for the ws2812B 16x16 
+ * LED array(s). It can be used to update, or update automatically
+ * as a separate task from the main conrol loop.
+*/
+
 #define DATA_PIN 18
 #define arr_len( x )  ( sizeof( x ) / sizeof( *x ) )
 

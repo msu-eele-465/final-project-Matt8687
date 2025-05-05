@@ -8,6 +8,15 @@
 #include "lm92_i2c.h"
 #include "lcd_i2c.h"
 
+/*
+ * @file main.cpp
+ * @breif Origins of the primary setup and primary running loop.alignas
+ * 
+ * This file sets up the secondary running task loop for the 
+ * Led Array Control (LAC), sets up the wifi hotspot & server,
+ * as well as is where the rtc devices are read and wrote from.
+*/
+
 static const char *TAG_MAIN = "Main";
 void IRAM_ATTR onTimer();
 
@@ -43,15 +52,12 @@ void loop() {
   lm92_temp_btes(data, 0);
   LAC_update_string(convert_to_string(data, 5), 5, 3);
 
-  // if(ISR_counter%2 == 0){
-    // lcd_clear();
-    for(int i = 0; i<16; i++){
-      data[i] = ' ';
-    }
-    rtc_get_time_bytes(data);
-    lm92_temp_btes(data);
-    lcd_writeBottom(data);
-  // }
+  for(int i = 0; i<16; i++){
+    data[i] = ' ';
+  }
+  rtc_get_time_bytes(data);
+  lm92_temp_btes(data);
+  lcd_writeBottom(data);
 }
 
 void IRAM_ATTR onTimer(){

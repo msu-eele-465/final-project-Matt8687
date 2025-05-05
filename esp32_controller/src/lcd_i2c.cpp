@@ -1,5 +1,14 @@
 #include "lcd_i2c.h"
 
+/*
+ * @file lcd_i2c.cpp
+ * @brief module created in order to write over i2c with the lcd controller
+ * 
+ * Using I2C this file allows for the writing of bytes to the msp4302310
+ * that controls the LCD pannel. The code for the controller is in 
+ * /i2c_lcd/app of the main repository for this project.
+*/
+
 #define LCD_DELAY_TIME 5
 
 void lcd_clear(){

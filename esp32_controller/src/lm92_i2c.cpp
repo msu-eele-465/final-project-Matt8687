@@ -1,5 +1,16 @@
 #include "lm92_i2c.h"
 
+/*
+ * @file lm92_i2c.cpp
+ * @brief module created to read and convert temp from the lm92 device
+ * 
+ * The primary purpose of this file is to mainly keep the main.cpp file
+ * clear of cluttering funcitons, but is imperative to have. It reads
+ * two bytes from the temperature sensor and converts it into a float.
+ * It also has a fuction to write that float to a byte array for later
+ * printing (to the lcd and led array(s)).
+*/
+
 float lm92_read_temperature(){
   float temperature;
   byte a, b;

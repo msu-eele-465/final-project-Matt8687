@@ -1,14 +1,18 @@
-/*********
-  Rui Santos
-  Complete project details at https://randomnerdtutorials.com  
-*********/
-
-// Load Wi-Fi library
 #include <WiFi.h>
 #include "web_server.h"
 #include "led_array_control.h"
 
-// Replace with your network credentials
+/*
+ * @file web_server.cpp
+ * @brief a module used to control the wifi hotspot & web app
+ * 
+ * Based originally on --> Rui Santos's <-- example sketch, this file is in
+ * charge of reading in user input from the hosted web server from a
+ * hosted wifi hotspot. It also contains the control structures for
+ * determing output to the LED array(s) through alteration of strings
+ * & modes of display.
+*/
+
 const char* ssid     = "ESP32-Access-Point";
 const char* password = "123456789";
 
@@ -18,25 +22,10 @@ WiFiServer server(80);
 // Variable to store the HTTP request
 String header;
 
-// Auxiliar variables to store the current output state
-String output26State = "off";
-String output27State = "off";
-
-// Assign output variables to GPIO pins
-const int output26 = 26;
-const int output27 = 27;
-
 String custom_message_input = "";
 
 void web_server_setup() {
   Serial.begin(115200);
-  // Initialize the output variables as outputs
-  pinMode(output26, OUTPUT);
-  pinMode(output27, OUTPUT);
-  // Set outputs to LOW
-  digitalWrite(output26, LOW);
-  digitalWrite(output27, LOW);
-
   // Connect to Wi-Fi network with SSID and password
   Serial.print("Setting AP (Access Point)…\n");
   // Remove the password parameter, if you want the AP (Access Point) to be open

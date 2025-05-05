@@ -1,5 +1,13 @@
 #include "rtc_i2c.h"
 
+/*
+ * @file lm92_i2c.cpp
+ * @brief handles reading and setting time/date values to the ds3231 rtc
+ * 
+ * Allows for the reading of time and conversion to byte array as well as
+ * byte arrays to strings <- generically for all.
+*/
+
 static TaskHandle_t xHandle = NULL;
 static uint8_t ucParameterToPass;
 
